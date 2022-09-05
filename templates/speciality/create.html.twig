@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  <div class="container text-light">
+
+      {% if app.request.get("_route") == "create_speciality" %}
+        <section class="row m-0 justify-content-center mb-5">
+          <div class="col-sm-3 col-lg-3 col-xl-3 text-center text-light">
+            <h3>Créer une spécialité</h3>
+          </div>
+        </section>
+      {% else %}
+        <section class="row m-0 justify-content-center">
+          <div class="col text-center text-light">
+            <h3>Modifier la spécialité "{{ speciality.skill }}"</h3>
+          </div>
+        </section>
+      {% endif %}
+
+      {{ form_start(form) }}
+        <section class="row m-0 justify-content-center">
+          <div class="col-12 col-md-8 text-center"> 
+            {{ form_row(form.skill) }}
+          </div>
+        </section>
+          {% if app.request.get("_route") == "create_speciality" %}
+            <section class="row m-0 justify-content-center">
+              <div class="col-sm-3 col-lg-3 col-xl-2 text-center"> 
+                <input type="submit" value="créer" class="btn btn-success mt-3">
+              </div>
+            </section>
+          {% else %}
+            <section class="row m-0 justify-content-center">
+              <div class="col-sm-3 col-lg-3 col-xl-2 text-center"> 
+                <input type="submit" value="modifier" class="btn btn-warning mt-3">
+              </div>
+            </section>
+          {% endif %}
+      {{ form_end(form) }}
+      
+  </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+      {% if app.request.get("_route") == "create_hideout" %}
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-3 col-lg-3 col-xl-3 text-center text-light">
+            <h3>Créer une planque</h3>
+          </div>
+        </section>
+      {% else %}
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-3 col-lg-3 col-xl-2 text-center text-light">
+            <h3>Modifier la planque {{ hideout.adress }}</h3>
+          </div>
+        </section>
+      {% endif %}
+
+      {{ form_start(form) }}
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-4 col-lg-3 col-xl-3 col-xxl-2 text-center text-light">
+            {{ form_row(form.code_hideout) }}
+          </div>
+          <div class="col-sm-6 col-lg-3 col-xl-3 col-xxl-2 text-center text-light">
+            {{ form_row(form.type) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-10 col-lg-8 col-xl-6 text-center text-light">
+            {{ form_row(form.adress) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-4 col-lg-3 col-xl-2 text-center text-light">
+            {{ form_row(form.country) }}
+          </div>
+        </section>
+
+        {% if app.request.get("_route") == "create_hideout" %}
+          <section class="row m-0 justify-content-center">
+            <div class="col-sm-3 col-lg-3 col-xl-2 text-center"> 
+              <input type="submit" value="créer" class="btn btn-success mt-3">
+            </div>
+          </section>
+        {% else %}
+          <section class="row m-0 justify-content-center">
+            <div class="col-sm-3 col-lg-3 col-xl-2 text-center"> 
+              <input type="submit" value="modifier" class="btn btn-warning mt-3">
+            </div>
+          </section>
+        {% endif %}
+      {{ form_end(form) }}
+
+{% endblock %}

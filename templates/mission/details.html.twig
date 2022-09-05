@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+  <div class="container">
+  
+    <section class="d-flex flex-wrap justify-content-center mt-5">
+          <div class="card m-1 bg-secondary text-light" style="width: 50rem;">
+            <div class="card-body">
+
+              <div class="row">
+                <h5 class="card-title text-center fw-bold mb-3">{{ mission.title|upper }}</h5>
+                  <div class="col mb-1 text-dark fw-bold">DESCRIPTION:</div>
+                  <div class="col-12 mb-3"> {{ mission.description }}</div>
+              </div>
+
+              <div class="row">
+                  <div class="col text-dark fw-bold">PAYS:</div>
+                  <div class="col">{{ mission.country }}</div>
+              </div>
+              <div class="row">
+                  <div class="col text-dark fw-bold">NOM DE CODE:</div>
+                  <div class="col">{{ mission.codename }}</div>
+              </div>
+              <div class="row">
+                  <div class="col text-dark fw-bold">TYPE:</div>
+                  <div class="col">{{ mission.missiontype }}</div>
+              </div>
+              <div class="row">
+                  <div class="col text-dark fw-bold mb-3">SPÉCIALITÉ REQUISE:</div>
+                  <div class="col mb-3">{{ mission.speciality }}</div>
+              </div>
+
+              <div class="row">
+                  <div class="col text-dark fw-bold">STATUS:</div>
+                  <div class="col">{{ mission.missionstatus }}</div>
+              </div>
+              <div class="row">
+                  <div class="col text-dark fw-bold">DATE DE DÉBUT:</div>
+                  <div class="col">{{ mission.datestart|date('d-m-Y') }}</div>
+              </div>
+              <div class="row">
+                  <div class="col text-dark fw-bold mb-3">DATE DE FIN:</div>
+                  <div class="col mb-3">{{ mission.dateend|date('d-m-Y') }}</div>
+              <div>
+
+              <div class="row">
+                <div class="col-6 text-dark fw-bold">AGENTS:</div>
+                <div class="col-6 mb-3">
+                  {% for agents in mission.agent %}
+                    <div>{{ agents.firstname|capitalize }} {{ agents.lastname|capitalize }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6 text-dark fw-bold">CIBLES:</div>
+                <div class="col-6 mb-3">
+                  {% for targets in mission.target %}
+                    <div>{{ targets.firstname|capitalize }} {{ targets.lastname|capitalize }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6 text-dark fw-bold">CONTACTS:</div>
+                <div class="col-6 mb-3">
+                    {% for contacts in mission.contact %}
+                      <div>{{ contacts.firstname|capitalize }} {{ contacts.lastname|capitalize }}</div>
+                    {% endfor %}
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-6 text-dark fw-bold">PLANQUES:</div>
+                <div class="col-6 mb-3">
+                    {% for hideouts in mission.hideout %}
+                      <div>{{ hideouts.adress }}</div>
+                    {% endfor %}
+                </div>
+              </div>
+
+              <div class="row justify-content-around">
+                <a href="/update-mission/{{ mission.id }}" class="col-4 col-md-2 btn btn-warning mt-3">Modifier</a>
+                <a href="/delete-mission/{{ mission.id }}" class="col-4 col-md-2 btn btn-danger mt-3">Supprimer</a>
+              </div>
+              
+            </div>
+          </div>
+    </section>
+
+    <div class="row justify-content-center">
+      <a href="/" class="col-2 col-md-1 btn btn-success mt-3 mb-5">Retour</a>
+    </div>
+
+  </div>
+
+{% endblock %}

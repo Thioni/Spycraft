@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+  <div class="container-fluid">
+
+    <h1 class="text-center text-light">Liste des Agents</h1>
+      <section class="d-flex flex-wrap justify-content-center my-5">
+        {% for agent in agents %}
+            <div class="card m-1 bg-secondary text-light" style="width: 25rem;">
+              <div class="card-body">
+                <h5 class="card-title text-center fw-bold mb-4">{{ agent.firstname|capitalize }} {{ agent.lastname|capitalize }}</h5>
+                  <div class="row">
+                    <div class="col-6 card-text text-dark fw-bold">DATE DE NAISSANCE:</div>
+                    <div class="col-6 card-text">{{ agent.birthdate|date('d-m-Y') }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 card-text text-dark fw-bold">PAYS:</div>
+                    <div class="col-6 card-text">{{ agent.nationality }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 card-text text-dark fw-bold mb-1">CODE AGENT:</div>
+                    <div class="col-6 card-text mb-1">{{ agent.codeagent }}</div>
+                  </div>
+                  <div class="row justify-content-end">
+                    <div class="col-6 card-text text-dark fw-bold mb-1">COMPÉTENCES:</div>
+                    <div class="col-6">
+                      {% for speciality in agent.skill %}
+                        <div>{{ speciality.skill }}</div>
+                      {% endfor %}
+                    </div>
+                  </div>
+              </div>
+              <div class="row justify-content-around">
+                <a href="/update-agent/{{ agent.id }}" class="col-3 btn btn-warning mb-2">Modifier</a>
+                <a href="/delete-agent/{{ agent.id }}" class="col-3 btn btn-danger mb-2">Supprimer</a>
+              </div>
+            </div>
+        {% endfor %}
+      </section>
+
+      <div class="row justify-content-center">
+        <a href="/" class="col-2 col-md-1 btn btn-success mb-5">Retour</a>
+      </div>
+
+  </div>
+{% endblock %}

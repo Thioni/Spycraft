@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Spycraft{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('bootstrap.min.css') }}">
+        {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script src="{{ asset('javascript/bootstrap.bundle.min.js') }}"></script>
+        {% endblock %}
+    </head>
+
+    <body class="bg-dark">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <div class="container-fluid">
+          <a class="navbar-brand fw-bold text-light" href="/">Spycraft</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Missions
+                </a>
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-light" href="/">Liste</a></li>
+                  <li><a class="dropdown-item text-light" href="/create-mission">Créer</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Agents
+                </a>
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-light" href="/agent-list">Liste</a></li>
+                  <li><a class="dropdown-item text-light" href="/create-agent">Créer</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cibles
+                </a>
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-light" href="/target-list">Liste</a></li>
+                  <li><a class="dropdown-item text-light" href="/create-target">Créer</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Contacts
+                </a>
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-light" href="contact-list">Liste</a></li>
+                  <li><a class="dropdown-item text-light" href="/create-contact">Créer</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Planques
+                </a>
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-light" href="/hideout-list">Liste</a></li>
+                  <li><a class="dropdown-item text-light" href="/create-hideout">Créer</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Spécialités
+                </a>
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-light" href="/speciality-list">Liste</a></li>
+                  <li><a class="dropdown-item text-light" href="/create-speciality">Créer</a></li>
+                </ul>
+              </li>
+            </ul>
+            <div class="text-light">
+              {% if app.user %}
+                  <span>Vous êtes connecté en tant que</span> <span class="fw-bold">{{ app.user.firstName ~ " " ~ app.user.lastName }} </span>
+                  <a href="{{ path('app_logout') }}" class="btn btn-danger ms-md-3">Se déconnecter</a>
+              {% else %}
+              <a href="/login" class="btn btn-success">Se connecter</a>
+            </div>
+              {% endif %}
+          </div>
+        </div>
+      </nav>
+
+    {% block body %}
+    <div class="container-fluid">
+    
+    </div>
+    {% endblock %}
+
+    <footer class="bg-secondary fixed-bottom">
+      <div class="text-light text-center">FOOTER</div>
+    </footer>
+
+    </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+  <div class="text-danger text-center">
+  {% for flashMessage in app.session.flashbag.get('error') %}
+      {{ flashMessage }}
+  {% endfor %}
+  </div>
+
+    <h1 class="text-center text-light">Liste des missions</h1>
+      <section class="d-flex flex-wrap justify-content-center my-5">
+        {% for mission in missions %}
+            <div class="card m-1 bg-secondary text-light" style="width: 25rem;">
+              <div class="card-body container">
+                <h5 class="card-title text-center fw-bold mb-3">{{ mission.title|upper }}</h5>
+                <div class="row">
+                  <div class="col-6 text-dark fw-bold">Pays:</div>
+                  <div class="col-6">{{ mission.country }}</div>
+                </div>
+                <div class="row">  
+                  <div class="col-6 text-dark fw-bold">Nom de code:</div>
+                  <div class="col-6">{{ mission.codename }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-6 text-dark fw-bold">Type:</div>
+                  <div class="col-6">{{ mission.missiontype }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-6 text-dark fw-bold">Status:</div>
+                  <div class="col-6">{{ mission.missionstatus }}</div>
+                </div>
+              </div>
+              <div class="row justify-content-around">
+                <a href="/mission-details/{{ mission.id }}" class="col-3 btn btn-success mb-2">Details</a>
+              </div>
+            </div>
+        {% endfor %}
+      </section>
+
+{% endblock %}

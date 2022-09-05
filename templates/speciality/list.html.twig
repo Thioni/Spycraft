@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+  <div class="container-fluid">
+
+    <h1 class="text-center text-light">Liste des spécialités</h1>
+      <section class="d-flex flex-wrap justify-content-center mt-5">
+        {% for speciality in specialities %}
+            <div class="card m-1 bg-secondary" style="width: 25rem;">
+              <div class="card-body">
+                <h5 class="card-title text-center text-light fw-bold">{{ speciality.skill }}</h5>
+              </div>
+              <div class="row justify-content-around">
+                <a href="/update-speciality/{{ speciality.id }}" class="col-3 btn btn-warning mb-2">Modifier</a>
+                <a href="/delete-speciality/{{ speciality.id }}" class="col-3 btn btn-danger mb-2">Supprimer</a>
+              </div>
+            </div>
+        {% endfor %}
+      </section>
+
+    <div class="row justify-content-center">
+      <a href="/" class="col-2 col-md-1 btn btn-success mt-3 mb-5">Retour</a>
+    </div>
+
+  </div>
+{% endblock %}

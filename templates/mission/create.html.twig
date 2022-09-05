@@ -1,0 +1,100 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+      {% if app.request.get("_route") == "create_mission" %}
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-3 col-lg-3 col-xl-3 text-center text-light">
+            <h3>Créer une mission</h3>
+          </div>
+        </section>
+      {% else %}
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-3 col-lg-3 col-xl-2 text-center text-light">
+            <h3>Modifier la mission {{ mission.title }}</h3>
+          </div>
+        </section>
+      {% endif %}
+
+      {{ form_start(form) }}
+        <section class="row m-0 justify-content-center text-light">
+          <div class="col-sm-4 col-lg-3 col-xl-3 col-xxl-2 text-center">
+            {{ form_row(form.title) }}
+          </div>
+          <div class="col-sm-4 col-lg-3 col-xl-3 col-xxl-2 text-center">
+            {{ form_row(form.codename) }}
+          </div>
+          <div class="col-sm-4 col-lg-3 col-xl-3 col-xxl-2 text-center">
+            {{ form_row(form.mission_type) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-8 text-center text-light">
+            {{ form_row(form.description) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-6 col-lg-4 col-xl-3 text-center text-light">
+            {{ form_row(form.mission_status) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-4 col-lg-3 col-xl-2 text-center text-light">  
+            {{ form_row(form.speciality) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-6 col-lg-3 col-xl-2 text-center text-light">  
+            {{ form_row(form.date_start) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-6 col-lg-3 col-xl-2 text-center text-light">  
+            {{ form_row(form.date_end) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-4 col-lg-3 col-xl-2 text-center text-light">  
+            {{ form_row(form.country) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-10 col-lg-8 col-xl-6 text-center text-light">  
+            {{ form_row(form.agent) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-10 col-lg-8 col-xl-6 text-center text-light">  
+            {{ form_row(form.target) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-10 col-lg-8 col-xl-6 text-center text-light">  
+            {{ form_row(form.contact) }}
+          </div>
+        </section>
+        <section class="row m-0 justify-content-center">
+          <div class="col-sm-10 col-lg-8 col-xl-6 text-center text-light">  
+            {{ form_row(form.hideout) }}
+          </div>
+        </section>
+
+        {% if app.request.get("_route") == "create_mission" %}
+          <section class="row m-0 justify-content-center">
+            <div class="col-sm-3 col-lg-3 col-xl-2 text-center"> 
+              <input type="submit" value="créer" class="btn btn-success mt-3 mb-5">
+            </div>
+          </section>
+        {% else %}
+          <section class="row m-0 mb-5 justify-content-center">
+            <div class="col-3 col-sm-2 col-xl-1 text-center align-self-end"> 
+              <a href="/" class="btn btn-success">Annuler</a>
+            </div>
+            <div class="col-3 col-sm-2 col-xl-1 text-center"> 
+              <input type="submit" value="modifier" class="btn btn-warning mt-3">
+            </div>
+          </section>
+        {% endif %}
+      {{ form_end(form) }}
+
+{% endblock %}

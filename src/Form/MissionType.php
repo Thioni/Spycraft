@@ -7,6 +7,10 @@ use App\Entity\Agent;
 use App\Entity\Target;
 use App\Entity\Contact;
 use App\Entity\Hideout;
+use App\Repository\AgentRepository;
+use App\Repository\ContactRepository;
+use App\Repository\HideoutRepository;
+use App\Repository\TargetRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -70,26 +74,41 @@ class MissionType extends AbstractType {
       "label" => "Agent(s)",
       "multiple" => true,
       "expanded" => true,
-
+      'query_builder' => function (AgentRepository $er) {
+        return $er->createQueryBuilder('u')
+            ->orderBy('u.nationality', 'ASC');
+    },
   ])
     ->add("target", EntityType::class, [
       "class" => Target::class,
       "label" => "Cible(s)",
       'attr' => ['required' => true],
       "multiple" => true,
-      "expanded" => true
+      "expanded" => true,
+      'query_builder' => function (TargetRepository $er) {
+        return $er->createQueryBuilder('u')
+            ->orderBy('u.nationality', 'ASC');
+    },
   ])
     ->add("contact", EntityType::class, [
       "class" => Contact::class,
       "label" => "Contact(s)",
       "multiple" => true,
-      "expanded" => true
+      "expanded" => true,
+      'query_builder' => function (ContactRepository $er) {
+        return $er->createQueryBuilder('u')
+            ->orderBy('u.nationality', 'ASC');
+    },
   ])
     ->add("hideout", EntityType::class, [
       "class" => Hideout::class,
       "label" => "Planque(s)",
       "multiple" => true,
       "expanded" => true,
+      'query_builder' => function (HideoutRepository $er) {
+        return $er->createQueryBuilder('u')
+            ->orderBy('u.country', 'ASC');
+    },
     ]);
   }
 

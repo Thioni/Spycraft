@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Agent;
-use App\Entity\Hideout;
 use App\Entity\Mission;
 use App\Form\MissionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -116,14 +114,8 @@ class MissionController extends AbstractController {
 
     $entityManager = $doctrine->getManager();
     $mission = $entityManager->getRepository(Mission::class)->find($id);
-    $agentsMission = $entityManager->getRepository(Agent::class)->findBy(array('mission' => $id));
-      foreach ($agentsMission as $agentMission) {
-        $agentMission->resetMission();
-      }
-    $hideoutsMission = $entityManager->getRepository(Hideout::class)->findBy(array('mission' => $id));
-      foreach ($hideoutsMission as $agentMission) {
-        $agentMission->resetMission();
-      }
+
+
     $entityManager->remove($mission);
     $entityManager->flush();
 

@@ -44,17 +44,14 @@ class AgentController extends AbstractController {
   }
 
   #[Route("/update-agent/{id}", name: "update_agent")]
-  public function update(Request $request, ManagerRegistry $doctrine, int $id): Response {
-
-    $entityManager = $doctrine->getManager();
-    $agent = $entityManager->getRepository(Agent::class)->find($id);
+  public function update(Request $request, ManagerRegistry $doctrine, Agent $agent): Response {
 
     $form = $this->createForm(AgentType::class, $agent);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $em = $doctrine->getManager();
-      $em->flush();
+      $doctrine->getManager()->flush();
+      $this->addFlash('error', 'Agent modifié');
       return $this->redirectToRoute("agent_list");
     }
 
@@ -65,14 +62,12 @@ class AgentController extends AbstractController {
   }
 
   #[Route("/delete-agent/{id}", name: "delete_agent")]
-  public function delete(ManagerRegistry $doctrine, int $id): Response {
+  public function delete(ManagerRegistry $doctrine, Agent $agent): Response {
 
-  $entityManager = $doctrine->getManager();
-  $agent = $entityManager->getRepository(Agent::class)->find($id);
-
-  $entityManager->remove($agent);
-   $entityManager->flush();
-
+    $em = $doctrine->getManager();
+    $em->remove($agent);
+    $em->flush();
+    $this->addFlash('error', 'Agent supprimé');
     return $this->redirectToRoute("agent_list");
   }
 

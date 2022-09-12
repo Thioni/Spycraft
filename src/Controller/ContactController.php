@@ -44,17 +44,14 @@ class ContactController extends AbstractController {
   }
 
   #[Route("/update-contact/{id}", name: "update_contact")]
-  public function update(Request $request, ManagerRegistry $doctrine, int $id): Response {
-
-    $entityManager = $doctrine->getManager();
-    $contact = $entityManager->getRepository(Contact::class)->find($id);
+  public function update(Request $request, ManagerRegistry $doctrine, Contact $contact): Response {
 
     $form = $this->createForm(ContactType::class, $contact);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $em = $doctrine->getManager();
-      $em->flush();
+      $doctrine->getManager()->flush();
+      $this->addFlash('error', 'Contact modifié');
       return $this->redirectToRoute("contact_list");
     }
 
@@ -64,16 +61,13 @@ class ContactController extends AbstractController {
     ]);
   }
 
-  #[Route("/delete-contact/{id}", name: "delete_agent")]
-  public function delete(ManagerRegistry $doctrine, int $id): Response {
+  #[Route("/delete-contact/{id}", name: "delete_contact")]
+  public function delete(ManagerRegistry $doctrine, Contact $contact): Response {
 
-    $entityManager = $doctrine->getManager();
-    $contact = $entityManager->getRepository(Contact::class)->find($id);
-
-
-    $entityManager->remove($contact);
-    $entityManager->flush();
-
+    $em = $doctrine->getManager();
+    $em->remove($contact);
+    $em->flush();
+    $this->addFlash('error', 'Contact supprimé');
     return $this->redirectToRoute("contact_list");
 
   }

@@ -44,17 +44,14 @@ class HideoutController extends AbstractController {
   }
 
   #[Route("/update-hideout/{id}", name: "update_hideout")]
-  public function update(Request $request, ManagerRegistry $doctrine, int $id): Response {
-
-    $entityManager = $doctrine->getManager();
-    $hideout = $entityManager->getRepository(Hideout::class)->find($id);
+  public function update(Request $request, ManagerRegistry $doctrine, Hideout $hideout): Response {
 
    $form = $this->createForm(HideoutType::class, $hideout);
    $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $em = $doctrine->getManager();
-      $em->flush();
+      $doctrine->getManager()->flush();
+      $this->addFlash('error', 'Planque modifiée');
       return $this->redirectToRoute("hideout_list");
     }
 
@@ -65,15 +62,12 @@ class HideoutController extends AbstractController {
   }
 
   #[Route("/delete-hideout/{id}", name: "delete_hideout")]
-  public function delete(ManagerRegistry $doctrine, int $id): Response {
+  public function delete(ManagerRegistry $doctrine, Hideout $hideout): Response {
 
-    $entityManager = $doctrine->getManager();
-    $hideout = $entityManager->getRepository(Hideout::class)->find($id);
-
-
-    $entityManager->remove($hideout);
-    $entityManager->flush();
-
+    $em = $doctrine->getManager();
+    $em->remove($hideout);
+    $em->flush();
+    $this->addFlash('error', 'Planque supprimée');
     return $this->redirectToRoute("hideout_list");
 
   }

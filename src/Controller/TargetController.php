@@ -44,17 +44,14 @@ class TargetController extends AbstractController {
   }
 
   #[Route("/update-target/{id}", name: "update_target")]
-  public function update(Request $request, ManagerRegistry $doctrine, int $id): Response {
-
-    $entityManager = $doctrine->getManager();
-    $target = $entityManager->getRepository(Target::class)->find($id);
+  public function update(Request $request, ManagerRegistry $doctrine, Target $target): Response {
 
     $form = $this->createForm(TargetType::class, $target);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $em = $doctrine->getManager();
-      $em->flush();
+      $doctrine->getManager()->flush();
+      $this->addFlash('error', 'Cible modifiée');
       return $this->redirectToRoute("target_list");
     }
 
@@ -65,15 +62,12 @@ class TargetController extends AbstractController {
   }
 
   #[Route("/delete-target/{id}", name: "delete_target")]
-  public function delete(ManagerRegistry $doctrine, int $id): Response {
+  public function delete(ManagerRegistry $doctrine, Target $target): Response {
 
-    $entityManager = $doctrine->getManager();
-    $target = $entityManager->getRepository(Target::class)->find($id);
-
-
-    $entityManager->remove($target);
-    $entityManager->flush();
-
+    $em = $doctrine->getManager();
+    $em->remove($target);
+    $em->flush();
+    $this->addFlash('error', 'Cible supprimée');
     return $this->redirectToRoute("target_list");
 
   }

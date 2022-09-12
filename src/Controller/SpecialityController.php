@@ -44,17 +44,14 @@ class SpecialityController extends AbstractController {
   }
 
   #[Route("/update-speciality/{id}", name: "update_speciality")]
-  public function update(Request $request, ManagerRegistry $doctrine, int $id): Response {
-
-    $entityManager = $doctrine->getManager();
-    $speciality = $entityManager->getRepository(speciality::class)->find($id);
+  public function update(Request $request, ManagerRegistry $doctrine, Speciality $speciality): Response {
 
     $form = $this->createForm(SpecialityType::class, $speciality);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $em = $doctrine->getManager();
-      $em->flush();
+      $doctrine->getManager()->flush();
+      $this->addFlash('error', 'Spécialité modifiée');
       return $this->redirectToRoute("speciality_list");
     }
 
@@ -65,17 +62,13 @@ class SpecialityController extends AbstractController {
   }
 
   #[Route("/delete-speciality/{id}", name: "delete_speciality")]
-  public function delete(ManagerRegistry $doctrine, int $id): Response {
+  public function delete(ManagerRegistry $doctrine, Speciality $speciality): Response {
 
-    $entityManager = $doctrine->getManager();
-    $speciality = $entityManager->getRepository(speciality::class)->find($id);
-
-
-    $entityManager->remove($speciality);
-    $entityManager->flush();
-
+    $em = $doctrine->getManager();
+    $em->remove($speciality);
+    $em->flush();
+    $this->addFlash('error', 'Spécialité supprimée');
     return $this->redirectToRoute("speciality_list");
-
   }
 
 }

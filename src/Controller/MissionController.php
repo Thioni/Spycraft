@@ -72,10 +72,7 @@ class MissionController extends AbstractController {
 
   #[IsGranted('ROLE_ADMIN')]
   #[Route("/update-mission/{id}", name: "update_mission")]
-  public function update(Request $request, ManagerRegistry $doctrine, int $id): Response {
-
-    $entityManager = $doctrine->getManager();
-    $mission = $entityManager->getRepository(Mission::class)->find($id);
+  public function update(Request $request, ManagerRegistry $doctrine, Mission $mission): Response {
 
     $form = $this->createForm(MissionType::class, $mission);
     $form->handleRequest($request);
@@ -96,8 +93,7 @@ class MissionController extends AbstractController {
         return $this->redirectToRoute('mission_list');
       }
 
-      $em = $doctrine->getManager();
-      $em->flush();
+      $doctrine->getManager()->flush();
       $this->addFlash('error', 'Mission modifiée');
       return $this->redirectToRoute("mission_list");
     }
@@ -110,15 +106,11 @@ class MissionController extends AbstractController {
 
   #[IsGranted('ROLE_ADMIN')]
   #[Route("/delete-mission/{id}", name: "delete_mission")]
-  public function delete(ManagerRegistry $doctrine, int $id): Response {
+  public function delete(ManagerRegistry $doctrine, Mission $mission): Response {
 
-    $entityManager = $doctrine->getManager();
-    $mission = $entityManager->getRepository(Mission::class)->find($id);
-
-
-    $entityManager->remove($mission);
-    $entityManager->flush();
-
+    $em = $doctrine->getManager();
+    $em->remove($mission);
+    $em->flush();
     return $this->redirectToRoute("mission_list");
   }
 
